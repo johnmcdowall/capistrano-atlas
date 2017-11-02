@@ -19,7 +19,9 @@ The capistrano-atlas gem adds a `cap <stage> provision` task to Capistrano that 
 * Install `rbenv` and use `ruby-build` to compile the version of Ruby required by your app (by inspecting your `.ruby-version` file)
 * And more!
 
-The gem is named "capistrano-atlas" because it is prescribes my ([@mattbrictson](https://github.com/mattbrictson)) personal preferences for automating deployments of Rails projects. I'm a freelance developer juggling lots of Rails codebases, so its important for me to have a good, consistent server configuration. You'll notice that capistrano-atlas is opinionated and strictly uses the following stack:
+The gem is named "capistrano-atlas" because it does the heavy lifting of setting up a VPS to be ready for modern Rails 5.1+ applications.
+
+You'll notice that capistrano-atlas is opinionated and strictly uses the following stack:
 
 * Ubuntu 14.04 LTS
 * PostgreSQL
