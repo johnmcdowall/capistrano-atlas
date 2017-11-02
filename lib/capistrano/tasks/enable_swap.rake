@@ -9,7 +9,7 @@ namespace :atlas do
     task :configure do
       rules = fetch(:atlas_ufw_rules, {})
 
-      on release_roles(:all) do
+      privileged_on release_roles(:all) do
         execute "sudo fallocate -l 4G /swapfile"
         execute "sudo chmod 600 /swapfile"
         execute "sudo mkswap /swapfile"
