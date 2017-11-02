@@ -8,6 +8,7 @@ include Capistrano::Atlas::DSL
 
 load File.expand_path("../tasks/provision.rake", __FILE__)
 load File.expand_path("../tasks/defaults.rake", __FILE__)
+load File.expand_path("../tasks/enable_swap.rake", __FILE__)
 load File.expand_path("../tasks/user.rake", __FILE__)
 load File.expand_path("../tasks/aptitude.rake", __FILE__)
 load File.expand_path("../tasks/ufw.rake", __FILE__)

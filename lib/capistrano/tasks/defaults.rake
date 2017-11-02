@@ -3,6 +3,7 @@ namespace :load do
 
     set :atlas_recipes, %w(
       aptitude
+      enable_swap
       bundler
       crontab
       dotenv
@@ -119,6 +120,7 @@ namespace :load do
           tmp/sockets
           public/.well-known
           public/system
+          node_modules
         )
     }
     set :linked_files, -> {
