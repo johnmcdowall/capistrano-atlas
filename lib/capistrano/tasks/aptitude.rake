@@ -89,7 +89,7 @@ namespace :atlas do
 
     def _install(pkg)
       with :debian_frontend => "noninteractive" do
-        execute :sudo, "aptitude", "-y -q install", pkg
+        execute :sudo, "aptitude", "-y -qq install", pkg
       end
     end
 
