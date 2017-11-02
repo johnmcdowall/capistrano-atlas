@@ -25,16 +25,16 @@ pumactl () {
 
 case "$1" in
 start)
-  $PUMACTL_CMD "start"
+  pumactl "start"
   ;;
 stop)
-  $PUMACTL_CMD "stop"
+  pumactl "stop"
   ;;
 restart|reload)
-  $PUMACTL_CMD "phased-restart"
+  pumactl "phased-restart"
   ;;
 status)
-  $PUMACTL_CMD "status"
+  pumactl "status"
   ;;
 *)
   echo >&2 "Usage: $0 <start|stop|restart|status>"
