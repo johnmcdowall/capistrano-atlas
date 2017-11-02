@@ -10,7 +10,7 @@ namespace :atlas do
       privileged_on roles(:web) do
         unless test("sudo [ -f /etc/ssl/#{application_basename}.crt ]")
           execute :sudo, "mkdir -p /opt/certbot"
-          execute :sudo, "cd /opt/certbot/ && wget https://dl.eff.org/certbot-auto && chmod a+x certbot-auto"
+          execute :sudo, "wget https://dl.eff.org/certbot-auto -O /opt/certbot/certbot-auto && chmod a+x /opt/certbot/certbot-auto"
           execute :sudo, "/opt/certbot/certbot-auto certonly --agree-tos "\
                          "--email #{fetch(:atlas_lets_encrypt_email)} --webroot "\
                          "-w #{current_path}/public "\
