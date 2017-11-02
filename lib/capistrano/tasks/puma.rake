@@ -1,9 +1,10 @@
 atlas_recipe :puma do
   during "deploy:starting", "starting"
   during :provision, %w(init_d nginx_site config_rb)
-
+  during "deploy:start", "start"
+  during "deploy:stop", "stop"
   during "deploy:restart", "restart"
-  after  "deploy:publishing", "restart"
+  during "deploy:publishing", "restart"
 end
 
 namespace :atlas do
