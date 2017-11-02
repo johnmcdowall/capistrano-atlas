@@ -1,5 +1,5 @@
 module Capistrano
-  module atlas
+  module Atlas
     class Recipe
       attr_reader :name
 

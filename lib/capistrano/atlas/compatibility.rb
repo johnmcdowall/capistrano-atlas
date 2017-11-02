@@ -1,5 +1,5 @@
 module Capistrano
-  module atlas
+  module Atlas
     module Compatibility
       def self.check
         check_capistrano_and_rake_are_loaded
