@@ -3,6 +3,7 @@ atlas_recipe :aptitude do
   before "provision:14_04", "atlas:aptitude:install_software_properties"
   before "provision:14_04", "atlas:aptitude:install_postgres_repo"
   before "provision:14_04", "atlas:aptitude:change_postgres_packages"
+  before "provision:14_04", "atlas:aptitude:install_nodejs_repo"
 end
 
 namespace :atlas do
@@ -43,6 +44,13 @@ namespace :atlas do
         _add_repository(
           "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main",
           :key => "https://www.postgresql.org/media/keys/ACCC4CF8.asc")
+      end
+    end
+
+    desc "Add the official latest NodeJS repo"
+    task :install_nodejs_repo do
+      privileged_on roles(:all) do |host|
+        execute("curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -")
       end
     end
 
