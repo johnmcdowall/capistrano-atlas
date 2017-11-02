@@ -14,7 +14,6 @@ namespace :load do
       seed
       ssl
       ufw
-      unicorn
       user
       version
     )
@@ -53,13 +52,13 @@ namespace :load do
     set :atlas_nginx_force_https, false
     set :atlas_nginx_redirect_hosts, {}
 
-    set :fiftyfive_puma_threads, "0, 8"
-    set :fiftyfive_puma_workers, 2
-    set :fiftyfive_puma_timeout, 30
-    set :fiftyfive_puma_config, ->{ "#{current_path}/config/puma.rb" }
-    set :fiftyfive_puma_stdout_log, ->{ "#{current_path}/log/puma.stdout.log" }
-    set :fiftyfive_puma_stderr_log, ->{ "#{current_path}/log/puma.stderr.log" }
-    set :fiftyfive_puma_pid, ->{ "#{current_path}/tmp/pids/puma.pid" }
+    set :atlas_puma_threads, "0, 8"
+    set :atlas_puma_workers, 2
+    set :atlas_puma_timeout, 30
+    set :atlas_puma_config, ->{ "#{current_path}/config/puma.rb" }
+    set :atlas_puma_stdout_log, ->{ "#{current_path}/log/puma.stdout.log" }
+    set :atlas_puma_stderr_log, ->{ "#{current_path}/log/puma.stderr.log" }
+    set :atlas_puma_pid, ->{ "#{current_path}/tmp/pids/puma.pid" }
 
     ask :atlas_postgresql_password, nil, :echo => false
     set :atlas_postgresql_pool_size, 5
@@ -103,11 +102,6 @@ namespace :load do
         "allow http" => :web,
         "allow https" => :web
 
-    set :atlas_unicorn_workers, 2
-    set :atlas_unicorn_timeout, 30
-    set :atlas_unicorn_config, proc{ "#{current_path}/config/unicorn.rb" }
-    set :atlas_unicorn_log, proc{ "#{current_path}/log/unicorn.log" }
-    set :atlas_unicorn_pid, proc{ "#{current_path}/tmp/pids/unicorn.pid" }
 
     set :bundle_binstubs, false
     set :bundle_flags, "--deployment --retry=3 --quiet"

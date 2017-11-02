@@ -11,7 +11,7 @@
 set -e
 
 APP_ROOT=<%= current_path %>
-PUMACTL_CMD="cd <%= current_path %>; bundle exec pumactl -F <%= fetch(:fiftyfive_puma_config) %>"
+PUMACTL_CMD="cd <%= current_path %>; bundle exec pumactl -F <%= fetch(:atlas_puma_config) %>"
 AS_USER=<%= puma_user %>
 set -u
 

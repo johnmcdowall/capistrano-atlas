@@ -1,4 +1,4 @@
-fiftyfive_recipe :puma do
+atlas_recipe :puma do
   during "deploy:starting", "starting"
   during :provision, %w(init_d nginx_site config_rb)
   during "deploy:start", "start"
@@ -7,7 +7,7 @@ fiftyfive_recipe :puma do
   during "deploy:publishing", "restart"
 end
 
-namespace :fiftyfive do
+namespace :atlas do
   namespace :puma do
     task :starting do
       fetch(:linked_files, []) << "config/puma.rb"
@@ -16,7 +16,7 @@ namespace :fiftyfive do
     desc "Install service script for puma"
     task :init_d do
       privileged_on roles(:app) do |host, user|
-        puma_user = fetch(:fiftyfive_puma_user) || user
+        puma_user = fetch(:atlas_puma_user) || user
 
         template "puma_init.erb",
                  "/etc/init.d/puma_#{application_basename}",
@@ -29,7 +29,7 @@ namespace :fiftyfive do
 
     desc "Install puma proxy into nginx sites and restart nginx"
     task :nginx_site do
-      set(:fiftyfive_server_name, "puma")
+      set(:atlas_server_name, "puma")
 
       privileged_on roles(:web) do
         template "nginx_site.erb",

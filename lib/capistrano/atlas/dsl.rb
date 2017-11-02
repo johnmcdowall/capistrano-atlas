@@ -127,12 +127,12 @@ module Capistrano
 
           unless File.exist?(override_path)
             override_path = File.join(
-              "lib/capistrano/fiftyfive/templates",
+              "lib/capistrano/atlas/templates",
               local_path
             )
             if File.exist?(override_path)
               compatibility_warning(
-                "Please move #{override_path} from lib/capistrano/fiftyfive "\
+                "Please move #{override_path} from lib/capistrano/atlas "\
                 "to lib/capistrano/atlas to ensure future compatibility with "\
                 "capistrano-atlas."
               )
@@ -161,16 +161,16 @@ module Capistrano
   module DSL
     module Env
       # Overrides capistrano's default `set` to assist developers that are
-      # migrating from the `fiftyfive_*` to `atlas_*` variable names. This will
+      # migrating from the `atlas_*` to `atlas_*` variable names. This will
       # be removed in a future version of capistrano-atlas.
       alias_method :_orig_capistrano_set, :set
       def set(name, *args, &block)
-        if name.to_s =~ /^fiftyfive_/
-          atlas_name = name.to_s.gsub(/^fiftyfive_/, "atlas_")
+        if name.to_s =~ /^atlas_/
+          atlas_name = name.to_s.gsub(/^atlas_/, "atlas_")
           compatibility_warning(
             "Use `set :#{atlas_name}` instead of `set :#{name}` to ensure "\
             "compatibility with future versions of capistrano-atlas. The "\
-            "fiftyfive_* names have been deprecated."
+            "atlas_* names have been deprecated."
           )
           name = atlas_name.intern
         end
@@ -178,16 +178,16 @@ module Capistrano
       end
 
       # Overrides capistrano's default `fetch` to assist developers that are
-      # migrating from the `fiftyfive_*` to `atlas_*` variable names. This will
+      # migrating from the `atlas_*` to `atlas_*` variable names. This will
       # be removed in a future version of capistrano-atlas.
       alias_method :_orig_capistrano_fetch, :fetch
       def fetch(name, *args, &block)
-        if name.to_s =~ /^fiftyfive_/
-          atlas_name = name.to_s.gsub(/^fiftyfive_/, "atlas_")
+        if name.to_s =~ /^atlas_/
+          atlas_name = name.to_s.gsub(/^atlas_/, "atlas_")
           compatibility_warning(
             "Use `fetch :#{atlas_name}` instead of `fetch :#{name}` to ensure "\
             "compatibility with future versions of capistrano-atlas. The "\
-            "fiftyfive_* names have been deprecated."
+            "atlas_* names have been deprecated."
           )
           name = atlas_name.intern
         end
