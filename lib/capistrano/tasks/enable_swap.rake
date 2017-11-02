@@ -16,9 +16,9 @@ namespace :atlas do
         execute "sudo swapon /swapfile"
         execute "sudo echo \"/swapfile   none    swap    sw    0   0\" > /etc/fstab"
         execute "sudo sysctl vm.swappiness=10"
-        execute "sudo echo \"vm.swappiness=10\" > /etc/sysctl.conf"
+        execute "sudo echo \"vm.swappiness=10\" >> /etc/sysctl.conf"
         execute "sudo sysctl vm.vfs_cache_pressure=50"
-        execute "sudo echo \"vm.vfs_cache_pressure = 50\" > /etc/sysctl.conf"
+        execute "sudo echo \"vm.vfs_cache_pressure = 50\" >> /etc/sysctl.conf"
       end
     end
 
