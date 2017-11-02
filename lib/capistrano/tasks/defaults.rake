@@ -54,7 +54,8 @@ namespace :load do
     set :atlas_nginx_force_https, false
     set :atlas_nginx_redirect_hosts, {}
 
-    ask :atlas_lets_encrypt_domain_name, "www.example.com"
+    ask :atlas_lets_encrypt_email
+    ask :atlas_lets_encrypt_domain_name
 
     set :atlas_puma_threads, "0, 8"
     set :atlas_puma_workers, 2
