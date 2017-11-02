@@ -9,12 +9,6 @@ namespace :atlas do
       privileged_on roles(:web) do
         template("nginx.erb", "/etc/nginx/nginx.conf", :sudo => true)
 
-        template "nginx_unicorn.erb",
-                 "/etc/nginx/sites-enabled/#{application_basename}",
-                 :sudo => true
-
-        execute "sudo rm -f /etc/nginx/sites-enabled/default"
-        execute "sudo mkdir -p /etc/nginx/#{application_basename}-locations"
         execute "sudo service nginx restart"
       end
     end

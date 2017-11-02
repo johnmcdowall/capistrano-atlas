@@ -1,0 +1,97 @@
+# Based on https://github.com/defunkt/unicorn/blob/master/examples/nginx.conf
+
+upstream <%= fetch(:fiftyfive_server_name) %>_<%= application_basename %> {
+  server unix:/tmp/<%= fetch(:fiftyfive_server_name) %>.<%= application_basename %>.sock fail_timeout=0;
+}
+
+<% [80, 443].each do |port| %>
+
+  <% fetch(:fiftyfive_nginx_redirect_hosts).each do |orig, desired| %>
+    server {
+      listen <%= port %>;
+      server_name <%= orig %>;
+      return 301 <%= fetch(:fiftyfive_nginx_force_https) ? "https" : "$scheme" %>://<%= desired %>$request_uri;
+    }
+  <% end %>
+
+  server {
+    listen <%= port %> <%= "spdy" if port == 443 %> default deferred; # for Linux
+
+    <% if port == 80 && fetch(:fiftyfive_nginx_force_https) %>
+      rewrite ^(.*) https://$http_host$1 permanent;
+    <% else %>
+
+      client_max_body_size 4G;
+      server_name _;
+
+      # ~2 seconds is often enough for most folks to parse HTML/CSS and
+      # retrieve needed images/icons/frames, connections are cheap in
+      # nginx so increasing this is generally safe...
+      keepalive_timeout 5;
+
+      # path for static files
+      root <%= current_path %>/public;
+
+      # Capistrano `deploy:web:disable` support
+      if (-f $document_root/system/maintenance.html) {
+        return 503;
+      }
+      error_page 503 @maintenance;
+      location @maintenance {
+        rewrite  ^(.*)$  /system/maintenance.html last;
+        break;
+      }
+
+      <% if port == 443 %>
+        ssl on;
+        ssl_ciphers ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:RSA+3DES:!ADH:!AECDH:!MD5;
+        ssl_prefer_server_ciphers on;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+        ssl_certificate /etc/ssl/<%= application_basename %>.crt;
+        ssl_certificate_key /etc/ssl/<%= application_basename %>.key;
+
+        <% if fetch(:fiftyfive_nginx_force_https) %>
+          add_header Strict-Transport-Security "max-age=631138519";
+        <% end %>
+      <% end %>
+
+      # Far-future expires and gzip for fingerprinted assets
+      location ^~ /<%= fetch(:assets_prefix, "assets") %>/ {
+        gzip_static on;
+        expires max;
+        add_header Cache-Control public;
+      }
+
+      include /etc/nginx/<%= application_basename%>-locations/*;
+
+      # Prefer to serve static files directly from nginx to avoid unnecessary
+      # data copies from the application server.
+      try_files $uri/index.html $uri @<%= fetch(:fiftyfive_server_name) %>;
+
+      location @<%= fetch(:fiftyfive_server_name) %> {
+        # an HTTP header important enough to have its own Wikipedia entry:
+        #   http://en.wikipedia.org/wiki/X-Forwarded-For
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        # this helps Rack set the proper URL scheme for doing HTTPS redirects:
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # pass the Host: header from the client right along so redirects
+        # can be set properly within the Rack application
+        proxy_set_header Host $http_host;
+
+        # we don't want nginx trying to do something clever with
+        # redirects, we set the Host: header above already.
+        proxy_redirect off;
+
+        proxy_pass http://<%= fetch(:fiftyfive_server_name) %>_<%= application_basename %>;
+      }
+
+      # Rails error pages
+      error_page 500 502 503 504 /500.html;
+      location = /500.html {
+        root <%= current_path %>/public;
+      }
+    <% end %>
+  }
+<% end %>
