@@ -9,6 +9,7 @@ namespace :load do
       logrotate
       migrate
       nginx
+      puma
       postgresql
       rbenv
       seed
@@ -124,7 +125,6 @@ namespace :load do
         [fetch(:atlas_dotenv_filename)] +
         %w(
           config/database.yml
-          config/unicorn.rb
         )
     }
     set :log_level, :debug
