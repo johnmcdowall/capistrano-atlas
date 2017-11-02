@@ -54,6 +54,8 @@ namespace :load do
     set :atlas_nginx_force_https, false
     set :atlas_nginx_redirect_hosts, {}
 
+    ask :atlas_lets_encrypt_domain_name, "www.example.com"
+
     set :atlas_puma_threads, "0, 8"
     set :atlas_puma_workers, 2
     set :atlas_puma_timeout, 30
@@ -92,12 +94,6 @@ namespace :load do
     set :atlas_sidekiq_concurrency, 25
     set :atlas_sidekiq_role, :sidekiq
 
-    ask :atlas_ssl_csr_country, "US"
-    ask :atlas_ssl_csr_state, "California"
-    ask :atlas_ssl_csr_city, "San Francisco"
-    ask :atlas_ssl_csr_org, "Example Company"
-    ask :atlas_ssl_csr_name, "www.example.com"
-
     # WARNING: misconfiguring firewall rules could lock you out of the server!
     set :atlas_ufw_rules,
         "allow ssh" => :all,
@@ -120,7 +116,6 @@ namespace :load do
           tmp/sockets
           public/.well-known
           public/system
-          node_modules
         )
     }
     set :linked_files, -> {

@@ -193,9 +193,7 @@ Check out my [rails-template][] project, which generates Rails applications with
 
 ## History
 
-This gem used to be called capistrano-fiftyfive, because it was initially built by [55 Minutes](http://55minutes.com) to automate its Rails deployments. I have since taken over ownership of the gem and renamed it to capistrano-atlas to avoid any confusion.
-
-If you are upgrading from `capistrano-fiftyfive`, refer to the [CHANGELOG entry for v0.22.0](CHANGELOG.md#0220-2015-06-22) for migration instructions.
+This gem was forked from `capistrano-mb`.
 
 ## Contributing
 
