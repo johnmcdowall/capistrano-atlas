@@ -15,10 +15,10 @@ namespace :atlas do
       privileged_on primary(:db) do
         user = fetch(:atlas_postgresql_user)
 
-        unless test("sudo -u postgres psql -c '\\du' | grep -q #{user}")
+        unless test("sudo -Hiu postgres psql -c '\\du' | grep -q #{user}")
           passwd = fetch(:atlas_postgresql_password)
           md5 = Digest::MD5.hexdigest(passwd + user)
-          execute "sudo -u postgres psql -c " +
+          execute "sudo -Hiu postgres psql -c " +
                   %Q["CREATE USER #{user} PASSWORD 'md5#{md5}';"]
         end
       end
@@ -30,8 +30,8 @@ namespace :atlas do
         user = fetch(:atlas_postgresql_user)
         db = fetch(:atlas_postgresql_database)
 
-        unless test("sudo -u postgres psql -l | grep -w -q #{db}")
-          execute "sudo -u postgres createdb -O #{user} #{db}"
+        unless test("sudo -Hiu postgres psql -l | grep -w -q #{db}")
+          execute "sudo -Hiu postgres createdb -O #{user} #{db}"
         end
       end
     end
