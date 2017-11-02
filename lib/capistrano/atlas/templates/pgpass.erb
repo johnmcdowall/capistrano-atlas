@@ -1,0 +1,1 @@
+<%= fetch(:atlas_postgresql_host) %>:5432:<%= fetch(:atlas_postgresql_database) %>:<%= fetch(:atlas_postgresql_user) %>:<%= fetch(:atlas_postgresql_password).gsub(/([\\:])/, '\\\\\1') %>

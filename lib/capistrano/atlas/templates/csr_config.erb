@@ -1,0 +1,10 @@
+[ req ]
+distinguished_name="req_distinguished_name"
+prompt="no"
+
+[ req_distinguished_name ]
+C="<%= fetch(:atlas_ssl_csr_country) %>"
+ST="<%= fetch(:atlas_ssl_csr_state) %>"
+L="<%= fetch(:atlas_ssl_csr_city) %>"
+O="<%= fetch(:atlas_ssl_csr_org) %>"
+CN="<%= fetch(:atlas_ssl_csr_name) %>"

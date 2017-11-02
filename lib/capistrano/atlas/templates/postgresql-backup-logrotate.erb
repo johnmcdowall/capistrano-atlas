@@ -1,0 +1,11 @@
+<%= fetch(:atlas_postgresql_backup_path) %> {
+  daily
+  nomissingok
+  rotate 30
+  ifempty
+  create 600 <%= user %>
+  dateext
+  postrotate
+    /usr/bin/sudo -u <%= user %> PGPASSFILE=<%= fetch(:atlas_postgresql_pgpass_path) %> /usr/bin/pg_dump -Fc -Z9 -O -x <%= fetch(:atlas_postgresql_dump_options) %> -h <%= fetch(:atlas_postgresql_host) %> -U <%= fetch(:atlas_postgresql_user) %> -f <%= fetch(:atlas_postgresql_backup_path) %> <%= fetch(:atlas_postgresql_database) %>
+  endscript
+}
