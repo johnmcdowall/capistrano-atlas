@@ -9,10 +9,10 @@ Gem::Specification.new do |spec|
   spec.author        = "John McDowall"
   spec.email         = "john@kantan.io"
   spec.description   = \
-    "Does all the heavy lifting for pProduction-ready provisioning " \ 
-    "and deployment recipes for the full Rails 5.1 stack. Installs and " \
-    "configures Ruby, Nginx, Puma, PostgreSQL, dotenv, Let's Encrypt and " \
-    "more onto Ubuntu 14.04 LTS using Capistrano. " 
+    "Does all the heavy lifting for production-ready provisioning "\
+    "and deployment for the full Rails 5.1 stack. Installs and "\
+    "configures Ruby, Nginx, Puma, PostgreSQL, dotenv, Let's Encrypt and "\
+    "more onto Ubuntu 14.04 LTS using Capistrano. "
     
   spec.summary       = "Additional Capistrano 3 recipes"
   spec.homepage      = "https://github.com/johnmcdowall/capistrano-atlas"

@@ -1,5 +1,5 @@
 module Capistrano
-  module atlas
-    VERSION = "0.32.0".freeze
+  module Atlas
+    VERSION = "0.0.1".freeze
   end
 end
