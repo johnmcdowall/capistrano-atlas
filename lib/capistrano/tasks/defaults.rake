@@ -52,7 +52,7 @@ namespace :load do
 
     set :atlas_log_file, "log/capistrano.log"
 
-    set :atlas_nginx_force_https, false
+    set :atlas_nginx_force_https, true
     set :atlas_nginx_redirect_hosts, {}
 
     ask :atlas_lets_encrypt_email
