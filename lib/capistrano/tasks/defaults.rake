@@ -40,7 +40,8 @@ namespace :load do
         "postgresql@ppa:pitti/postgresql"        => :db,
         "tklib"                                  => :all,
         "ufw"                                    => :all,
-        "zlib1g-dev"                             => :all
+        "zlib1g-dev"                             => :all,
+        "fail2ban"                               => :all
 
     set :atlas_bundler_lockfile, "Gemfile.lock"
     set :atlas_bundler_gem_install_command,
